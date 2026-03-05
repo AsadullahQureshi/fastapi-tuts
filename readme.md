@@ -97,5 +97,3 @@ fastapi-tuts/
 ## Author
 
 Asadullah
-
-```
