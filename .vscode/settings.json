@@ -1,0 +1,9 @@
+{
+  "python.defaultInterpreterPath": "./venv/bin/python",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "ms-python.black-formatter",
+  "python.analysis.typeCheckingMode": "basic",
+  "files.exclude": {
+    "**/__pycache__": true
+  }
+}
