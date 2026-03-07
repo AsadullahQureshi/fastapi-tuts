@@ -59,6 +59,8 @@ Start the development server using:
 
 ```bash
 uvicorn main:app --reload
+# when you are fastapi instance move into app directory of app file
+uvicorn app.app:app --reload --port 9090 
 ```
 
 The API will run at:
