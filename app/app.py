@@ -1,16 +1,34 @@
 from fastapi import FastAPI, Depends, Request
 from typing import Annotated
 from projectTypes import SearchParam
-from app.routing import todo_routing
+from app.api import todo_routing
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from app.database.mysql import engine, Base
+from sqlalchemy import text
+from app.models.user import User
+from app.models.user import Todo
+
 
 app = FastAPI()
+
+Base.metadata.create_all(bind=engine)
+print(Base.metadata.tables.keys())
 
 
 @app.get("/")
 def read_root():
-    return {"message": "Hello Asadullah Qureshi 🚀 FastAPI is working"}
+    return {"message": "Hello Asadullah Qureshi 🚀 FastAPI is connected"}
+
+
+@app.get("/db-test")
+def test_db():
+    try:
+        with engine.connect() as connection:
+            result = connection.execute(text("SELECT 1"))
+            return {"message": "Database Connected Successfully"}
+    except Exception as e:
+        return {"error": str(e)}
 
 
 @app.get("/sending")

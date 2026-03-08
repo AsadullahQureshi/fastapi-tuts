@@ -12,5 +12,8 @@
     "Qureshi",
     "uvicorn",
     "venv"
-  ]
+  ],
+  "python.analysis.extraPaths": ["./app"]
+
+
 }
