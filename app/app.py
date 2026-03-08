@@ -6,14 +6,15 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from app.database.mysql import engine, Base
 from sqlalchemy import text
-from app.models.user import User
-from app.models.user import Todo
+
+# from app.models.user import User
+# from app.models.user import Todo
 
 
 app = FastAPI()
 
-Base.metadata.create_all(bind=engine)
-print(Base.metadata.tables.keys())
+# Base.metadata.create_all(bind=engine)
+# print(Base.metadata.tables.keys())
 
 
 @app.get("/")
