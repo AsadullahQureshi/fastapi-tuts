@@ -1,20 +1,14 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-import os
-from dotenv import load_dotenv
+from app.config.app_config import getAppConfig
+from urllib.parse import quote_plus
 
-load_dotenv(".env")
+config = getAppConfig()
+password = quote_plus(config.db_password)
 
+DATABASE_URL = f"mysql+pymysql://{config.db_user}:{password}@{config.db_host}:{config.db_port}/{config.db_name}"
 
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = os.getenv("DB_PORT")
-DB_NAME = os.getenv("DB_NAME")
-
-DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-
-
+print(DATABASE_URL)
 engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

@@ -6,9 +6,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from app.database.mysql import engine, Base
 from sqlalchemy import text
-
-# from app.models.user import User
-# from app.models.user import Todo
+from app.config.app_config import getAppConfig
 
 
 app = FastAPI()
@@ -19,7 +17,11 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    return {"message": "Hello Asadullah Qureshi 🚀 FastAPI is connected"}
+    config = getAppConfig()
+    return {
+        "message": "Hello Asadullah Qureshi 🚀 FastAPI is connected",
+        "config": config,
+    }
 
 
 @app.get("/db-test")

@@ -96,6 +96,31 @@ fastapi-tuts/
 ├── README.md
 └── .venv/
 ```
+## Database migration
+Run in your project root directory
+```
+    alembic init migrations
+```
+this will create
+```
+migrations/
+   env.py
+   versions/
+alembic.ini
+```
+
+### create migration
+
+```bash
+    alembic revision --autogenerate -m "create users table"
+```
+
+### run migration 
+```bash 
+
+alembic upgrade head
+```
+
 
 ## Author
 
