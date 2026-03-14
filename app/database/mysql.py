@@ -8,7 +8,6 @@ password = quote_plus(config.db_password)
 
 DATABASE_URL = f"mysql+pymysql://{config.db_user}:{password}@{config.db_host}:{config.db_port}/{config.db_name}"
 
-print(DATABASE_URL)
 engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
