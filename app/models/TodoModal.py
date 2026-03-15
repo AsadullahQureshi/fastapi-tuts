@@ -22,3 +22,7 @@ class TodoResponse(BaseModel):
 
     class Config:
         from_attributes = True
+        
+class TodoCreateResponse(BaseModel):
+    message: str
+    todo: TodoResponse

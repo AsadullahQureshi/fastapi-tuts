@@ -1,13 +1,13 @@
 from sqlalchemy.orm import Session
 from app.database.schema import TodoSchema
-from app.models.TodoModal import TodoUpdate
+from app.models.TodoModal import TodoUpdate, TodoModal
 
 
 def get_todos(db: Session):
     return db.query(TodoSchema).all()
 
 
-def create_todo(db: Session, todo: TodoSchema):
+def create_todo(db: Session, todo: TodoModal):
     new_todo = TodoSchema(title=todo.title, completed=todo.completed)
     db.add(new_todo)
     db.commit()
@@ -26,10 +26,10 @@ def update_todo(db: Session, todo_id: int, todo_data: TodoUpdate):
         return None
 
     if todo_data.title is not None:
-        todo.title = todo_data.title # type: ignore
+        todo.title = todo_data.title
 
     if todo_data.completed is not None:
-        todo.completed = todo_data.completed  # type: ignore
+        todo.completed = todo_data.completed
 
     db.commit()
     db.refresh(todo)

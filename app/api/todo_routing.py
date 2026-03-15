@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
-from typing import Annotated
-from app.models.TodoModal import TodoModal, TodoUpdate
+from typing import Annotated, List
+from app.models.TodoModal import TodoModal, TodoUpdate, TodoResponse, TodoCreateResponse
 from app.database.mysql import get_db
 from sqlalchemy.orm import Session
 from app.controllers.TodoController import (
@@ -14,19 +14,19 @@ from app.controllers.TodoController import (
 router = APIRouter(prefix="/todo")
 
 
-@router.get("/")
-def index(db: Session = Depends(get_db)):
+@router.get("/", response_model=List[TodoResponse])
+def get_todo_list(db: Session = Depends(get_db)):
     todos = get_todos(db)
-    return {"list": todos}
+    return todos
 
 
-@router.post("/created")
+@router.post("/created", response_model=TodoCreateResponse)
 def created(todo: TodoModal, db: Session = Depends(get_db)):
     create = create_todo(db, todo)
     return {"message": "Todo created successfully", "todo": create}
 
 
-@router.get("/{id}")
+@router.get("/{id}", response_model=TodoResponse)
 def index(id: int, db: Session = Depends(get_db)):
     todo = get_todo(db, id)
 
