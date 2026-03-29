@@ -1,6 +1,4 @@
 from pydantic import BaseModel, Field, EmailStr, ValidationInfo, field_validator
-from typing import Optional
-from datetime import datetime
 
 
 class Login(BaseModel):
@@ -20,12 +18,3 @@ class Register(BaseModel):
         if "password" in info.data and v != info.data["password"]:
             raise ValueError("Password does not match")
         return v
-
-
-class UserResponse(BaseModel):
-    id: int
-    name: str
-    email: EmailStr
-
-    class Config:
-        from_attributes = True

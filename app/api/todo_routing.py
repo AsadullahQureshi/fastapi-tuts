@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from typing import Annotated, List
-from app.models.TodoModal import TodoModal, TodoUpdate, TodoResponse, TodoCreateResponse
+from app.models.TodoModal import TodoModal, TodoUpdate
+from app.response.todo import TodoResponse, TodoCreateResponse
 from app.database.mysql import get_db
 from sqlalchemy.orm import Session
 from app.controllers.TodoController import (

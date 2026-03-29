@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, Request
 from typing import Annotated
 from projectTypes import SearchParam
-from app.api import todo_routing
+from app.api import todo_routing, auth
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from app.database.mysql import engine, Base
@@ -59,7 +59,8 @@ def search2(request: Request):
 
 
 # include todo other router
-app.include_router(todo_routing.router)
+app.include_router(todo_routing.router,prefix='/api')
+app.include_router(auth.router,prefix="/api")
 
 
 @app.exception_handler(RequestValidationError)
