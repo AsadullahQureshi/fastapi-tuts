@@ -2,6 +2,8 @@ from pwdlib import PasswordHash
 from app.config.app_config import getAppConfig
 from datetime import datetime, timedelta
 import jwt
+from jwt import ExpiredSignatureError, InvalidTokenError
+from fastapi import HTTPException, status
 
 # create instance (argon2 is default & recommended)
 password_hash = PasswordHash.recommended()
@@ -34,3 +36,25 @@ def createRefreshToken(data: dict):
     to_encode.update({"exp": expire, "type": "refresh"})
 
     return jwt.encode(to_encode, config.secret_key, algorithm=config.algorithm)
+
+
+def decodeAccessToken(token: str):
+    try:
+        payload = jwt.decode(token, config.secret_key, algorithms=[config.algorithm])
+
+        # Optional: check token type
+        token_type = payload.get("type")
+        if token_type not in ["access", "refresh"]:
+            raise Exception("Invalid token type")
+
+        return payload
+
+    except ExpiredSignatureError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Token expired"
+        )
+
+    except InvalidTokenError:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Invalid token"
+        )

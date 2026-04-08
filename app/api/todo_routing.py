@@ -11,9 +11,9 @@ from app.controllers.TodoController import (
     update_todo,
     delete_todo,
 )
+from app.middleware.jwt_verify import authenticate_user
 
-router = APIRouter(prefix="/todo")
-
+router = APIRouter(prefix="/todo",dependencies=[Depends(authenticate_user)])
 
 @router.get("/", response_model=List[TodoResponse])
 def get_todo_list(db: Session = Depends(get_db)):
